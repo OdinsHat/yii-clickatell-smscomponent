@@ -139,6 +139,7 @@ class SendSmsComponent extends CApplicationComponent
         $context = stream_context_create($opts);
         $response = file_get_contents(self::API_HTTP_URL.'auth', false, $context);
         if(empty($response)){
+            Yii::log('Empty response from API service');
             throw new CException('Empty response from API service');
         }
         $this->last_response = $response;
@@ -175,6 +176,7 @@ class SendSmsComponent extends CApplicationComponent
         $context  = $this->buildContext($data);
         $response = file_get_contents(self::API_HTTP_URL.'sendmsg', false, $context);
         if(empty($response)){
+            Yii::log('Empty response from API service');
             throw new CException('Empty response from API service');
         }
         return $response;
@@ -195,7 +197,6 @@ class SendSmsComponent extends CApplicationComponent
         );
 
         $context  = $this->buildContext($data);
-        
         $response = file_get_contents(self::API_HTTP_URL.'routeCoverage.php', false, $context);
         if(empty($response)){
             throw new CException('Empty response from API service');
@@ -239,6 +240,7 @@ class SendSmsComponent extends CApplicationComponent
             $this->batch_id = str_replace('ID: ', '', $response);
             return true;
         }
+        Yii::log($reponse);
         $this->errors[] = $response;
         return false;
     }
@@ -247,8 +249,8 @@ class SendSmsComponent extends CApplicationComponent
     {
         $fields = array();
         if(empty($this->recipients)){
-            echo 'No recipients';
-            die(); 
+            Yii::log('No recipients for batch message');
+            return false;
         }
         $recipient = array_pop($this->recipients);
 
