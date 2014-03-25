@@ -3,9 +3,10 @@
  * This SMS component was put together from an original CakePHP component 
  * created by the author Doug Bromley in 2008 for the CakePHP framework.
  * 
- * It does not use the Yii framework built in functionality as well as 
- * it could but has worked sucessfully in all major Yii versions for 
- * the past few years.
+ * It has been successfully used in Yii Versions: 1.1.5-1.1.15
+ *
+ * @author Doug Bromley <doug.bromley@gmail.com>
+ * @link https://github.com/OdinsHat/yii-clickatell-smscomponent
  * 
  * @todo Make better use of Yii framework integration
  * @todo Improve documentation
@@ -110,7 +111,11 @@ class SendSmsComponent extends CApplicationComponent
     }
 
     /**
-     * Authenticate and retrieve a session id
+     * Authenticate and retrieve a session id for a batch sending job.
+     *
+     * Single texts simply take the credentials in the post data request with 
+     * the message. But batch messages require the session id given by this 
+     * method to send a batch of messages.
      *
      * @return integer
      */
@@ -277,6 +282,14 @@ class SendSmsComponent extends CApplicationComponent
         return false;
     }
 
+    /**
+     * Builds a correctly formatted context for sending to the Clcikatell API 
+     * enpoint in POST format.
+     *
+     * @param array $data to data to be formatted into valid url-encoded postdata
+     *
+     * @return resource
+     */
     private function buildContext($data)
     {
         $postdata = http_build_query($data);
