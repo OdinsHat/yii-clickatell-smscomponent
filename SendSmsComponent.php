@@ -7,13 +7,12 @@
  *
  * @author Doug Bromley <doug.bromley@gmail.com>
  * @link https://github.com/OdinsHat/yii-clickatell-smscomponent
+ * @license BSD
  * 
  * @todo Make better use of Yii framework integration
  * @todo Improve documentation
  * @todo Improve error handling
  * @todo a spring clean
- *
- * @link http://code.google.com/p/clickatell-sms-cakephp
  */
  
 class SendSmsComponent extends CApplicationComponent
@@ -316,6 +315,12 @@ class SendSmsComponent extends CApplicationComponent
         return $template;
     }
 
+    /**
+     * A crude error output method.
+     *
+     * @todo improve error handling.
+     * @todo improve error loging here.
+     */
     public function printErrors()
     {
         foreach($this->errors as $error){
