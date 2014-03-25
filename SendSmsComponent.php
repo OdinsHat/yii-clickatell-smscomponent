@@ -159,7 +159,11 @@ class SendSmsComponent extends CApplicationComponent
      * @see SendSmsComponent::api_pass
      * @see SendSmsComponent::api_from
      */
-    public function postSms($tel, $message, $company = 'MLink') {
+    public function postSms($tel, $message, $company = null) {
+
+        if(!$company){
+            $company = $this->api_from;
+        }
 
         $data = array(
             'api_id' => $this->api_id,
