@@ -11,7 +11,6 @@
  * @todo Make better use of Yii framework integration
  * @todo Improve documentation
  * @todo Improve error handling
- * @todo add support for batch handling.
  * @todo a spring clean
  *
  * @link http://code.google.com/p/clickatell-sms-cakephp
