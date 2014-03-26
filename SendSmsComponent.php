@@ -201,10 +201,15 @@ class SendSmsComponent extends CApplicationComponent
 
         $context  = $this->buildContext($data);
         $response = file_get_contents(self::API_HTTP_URL.'routeCoverage.php', false, $context);
+        $this->last_reponse = $response;
         if(empty($response)){
             throw new CException('Empty response from API service');
         }
-        return $response;
+
+        if(strpos($response, 'OK') !== false){
+            return true
+        }
+        return false;
     }
 
     /**
