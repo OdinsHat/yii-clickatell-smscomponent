@@ -6,6 +6,7 @@
  * It has been successfully used in Yii Versions: 1.1.5-1.1.15
  *
  * @author Doug Bromley <doug.bromley@gmail.com>
+ * @copyright Doug Bromley
  * @link https://github.com/OdinsHat/yii-clickatell-smscomponent
  * @license BSD
  * 
