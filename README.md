@@ -6,10 +6,13 @@ A component for the Yii framework using the Clickatell HTTP API.
 Able to send single SMS or start a batch session and send batch text messages.
 See the Clickatell HTTP API documentation for further details on what this entails.
 
-Instructions
+Installation
 ------------
 
-### Complete Configuration
+### 1. Copy SendSmsComponent.php
+Copy the main `SendSmsComponent.php` file into your `appfolder/components` directory.
+
+### 2. Complete Configuration
 In your Yii config file under the components section be sure to add 
 the following details within components as a seperate settings 
 array called smsSend:
@@ -27,11 +30,24 @@ array called smsSend:
     ),
 ```
 
+Usage
+-----
+
 ### Sending a single text
 
 ```php
 $sms = Yii::app()->smsSend;
 $sms->postSms('070000000', "Some message", "SenderName");
+
+```
+
+### Getting query coverage for a phone number
+
+```php
+$sms = Yii::app()->smsSend;
+if($sms->queryCoverage(070000000)){
+    echo 'Can send';
+}
 
 ```
 
@@ -42,6 +58,7 @@ yourself until I can extract an example from our exiting system.
 
 Further Information
 -------------------
+* [Yii PHP Framework](http://yiiframework.com)
 * [Clickatell HTTP API documentation (pdf)](http://www.clickatell.com/downloads/http/Clickatell_HTTP.pdf)
 * This component was originally adapted from a CakePHP component I made in 2008 available 
 [here](https://code.google.com/p/clickatell-sms-cakephp/) (not maintained).
