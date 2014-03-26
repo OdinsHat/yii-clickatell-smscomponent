@@ -208,7 +208,7 @@ class SendSmsComponent extends CApplicationComponent
         }
 
         if(strpos($response, 'OK') !== false){
-            return true
+            return true;
         }
         return false;
     }
