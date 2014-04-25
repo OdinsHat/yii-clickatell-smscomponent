@@ -1,5 +1,5 @@
 {
-    "name": "OdinsHat/;yii-clickatell-smscomponent",
+    "name": "OdinsHat/yii-clickatell-smscomponent",
     "description": "Yii component for interfacing with the Clickatell SMS HTTP API",
     "version": "0.5",
     "type": "library",
