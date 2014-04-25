@@ -1,24 +1,24 @@
 {
-	"name": "OdinsHat/;yii-clickatell-smscomponent",
-	"description": "Yii component for interfacing with the Clickatell SMS HTTP API",
-	"version": "0.5",
-	"type": "library",
-	"keywords": ["yii", "sms", "clickatell"],
-	"homepage": "https://github.com/OdinsHat/yii-clickatell-smscomponent",
-	"license": "BSD",
-	"authors": [
-		{
-			"name": "Doug Bromley",
-			"email": "doug@tintophat.com",
-			"homepage": "https://github.com/OdinsHat/",
-			"role": "Developer"
-		}
-	],
-	"support": {
-		"issues": "https://github.com/OdinsHat/yii-clickatell-smscomponent/issues",
-		"source": "https://github.com/OdinsHat/yii-clickatell-smscomponent"
-	}
-	"require": {
-		"php": ">=5.1.0"
-	}
+    "name": "OdinsHat/;yii-clickatell-smscomponent",
+    "description": "Yii component for interfacing with the Clickatell SMS HTTP API",
+    "version": "0.5",
+    "type": "library",
+    "keywords": ["yii", "sms", "clickatell"],
+    "homepage": "https://github.com/OdinsHat/yii-clickatell-smscomponent",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Doug Bromley",
+            "email": "doug@tintophat.com",
+            "homepage": "https://github.com/OdinsHat/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/OdinsHat/yii-clickatell-smscomponent/issues",
+        "source": "https://github.com/OdinsHat/yii-clickatell-smscomponent"
+    },
+    "require": {
+        "php": ">=5.1.0"
+    }
 }
