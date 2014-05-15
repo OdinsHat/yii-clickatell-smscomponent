@@ -38,7 +38,6 @@ Usage
 ```php
 $sms = Yii::app()->smsSend;
 $sms->postSms('070000000', "Some message", "SenderName");
-
 ```
 
 ### Getting query coverage for a phone number
@@ -48,7 +47,6 @@ $sms = Yii::app()->smsSend;
 if($sms->queryCoverage(070000000)){
     echo 'Can send';
 }
-
 ```
 
 ### Sending batch messages
@@ -59,6 +57,7 @@ yourself until I can extract an example from our exiting system.
 Further Information
 -------------------
 * [Yii PHP Framework](http://yiiframework.com)
+* [Yii Extension Site Page](http://www.yiiframework.com/extension/clickatell-smscomponent/)
 * [Clickatell HTTP API documentation (pdf)](http://www.clickatell.com/downloads/http/Clickatell_HTTP.pdf)
 * This component was originally adapted from a CakePHP component I made in 2008 available 
 [here](https://code.google.com/p/clickatell-sms-cakephp/) (not maintained).
