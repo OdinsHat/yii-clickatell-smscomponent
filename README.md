@@ -1,7 +1,7 @@
 Yii Clickatell SmsComponent
 ===========================
 
-A component for the Yii framework using the Clickatell HTTP API.
+A component for the Yii framework using the [Clickatell](http://www.clickatell.co.uk/) HTTP API.
 
 Able to send single SMS or start a batch session and send batch text messages.
 See the Clickatell HTTP API documentation for further details on what this entails.
