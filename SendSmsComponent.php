@@ -1,21 +1,23 @@
 <?php
 /**
- * This SMS component was put together from an original CakePHP component 
+ * This SMS component was put together from an original CakePHP component
  * created by the author Doug Bromley in 2008 for the CakePHP framework.
- * 
+ *
  * It has been successfully used in Yii Versions: 1.1.5-1.1.15
  *
  * @author Doug Bromley <doug.bromley@gmail.com>
  * @copyright Doug Bromley
  * @link https://github.com/OdinsHat/yii-clickatell-smscomponent
  * @license BSD
- * 
+ *
  * @todo Make better use of Yii framework integration
  * @todo Improve documentation
  * @todo Improve error handling
  * @todo a spring clean
  */
- 
+
+namespace OdinsHat;
+
 class SendSmsComponent extends CApplicationComponent
 {
     /**
@@ -46,7 +48,7 @@ class SendSmsComponent extends CApplicationComponent
      * The delay in minutes before the message is sent to the reciever.
      * This doesn't affect the speed of the script execution - its a variable
      * used at the Clickatell end to delay message sending.
-     * 
+     *
      * @access public
      * @var integer
      */
@@ -56,7 +58,7 @@ class SendSmsComponent extends CApplicationComponent
      * If the text is delayed then switching this on "1"
      * will cause it to be escalated to and alternative.
      * Could cost more to send the message!
-     * 
+     *
      * @access public
      * @var integer
      */
@@ -89,13 +91,13 @@ class SendSmsComponent extends CApplicationComponent
      * The Clickatell HTTP API url for sending GET or POST requests too.
      */
     const API_HTTP_URL = 'http://api.clickatell.com/http/';
-    
+
     /**
      * The Clickatell HTTP Batch API url for sending batch messages
      */
     const API_HTTP_BATCH_URL = 'http://api.clickatell.com/http_batch/';
 
-    
+
     public function __construct($api_user = null, $api_pass = null, $api_from = null, $api_id = null)
     {
         $this->api_user = $api_user;
@@ -112,8 +114,8 @@ class SendSmsComponent extends CApplicationComponent
     /**
      * Authenticate and retrieve a session id for a batch sending job.
      *
-     * Single texts simply take the credentials in the post data request with 
-     * the message. But batch messages require the session id given by this 
+     * Single texts simply take the credentials in the post data request with
+     * the message. But batch messages require the session id given by this
      * method to send a batch of messages.
      *
      * @return integer
@@ -128,7 +130,7 @@ class SendSmsComponent extends CApplicationComponent
             )
         );
 
-        $opts = array('http' => 
+        $opts = array('http' =>
             array(
                 'method' => 'POST',
                 'header' => 'Content-type: application/x-www-form-urlencoded',
@@ -138,7 +140,7 @@ class SendSmsComponent extends CApplicationComponent
 
         $context = stream_context_create($opts);
         $response = file_get_contents(self::API_HTTP_URL.'auth', false, $context);
-        if(empty($response)){
+        if (empty($response)) {
             Yii::log('Empty response from API service');
             throw new CException('Empty response from API service');
         }
@@ -147,22 +149,23 @@ class SendSmsComponent extends CApplicationComponent
 
         return $response;
     }
-    
+
     /**
      * Post a message to the Clickatell servers for the number provided
-     * 
+     *
      * @param string $tel The telephone number in international format.  Not inclduing a leading "+" or "00".
      * @param string $message The text message to send to the handset.
      * @return string
-     * 
+     *
      * @see SendSmsComponent::api_id
      * @see SendSmsComponent::api_user
      * @see SendSmsComponent::api_pass
      * @see SendSmsComponent::api_from
      */
-    public function postSms($tel, $message, $company = null) {
+    public function postSms($tel, $message, $company = null)
+    {
 
-        if(!$company){
+        if (!$company) {
             $company = $this->api_from;
         }
 
@@ -179,7 +182,7 @@ class SendSmsComponent extends CApplicationComponent
 
         $context  = $this->buildContext($data);
         $response = file_get_contents(self::API_HTTP_URL.'sendmsg', false, $context);
-        if(empty($response)){
+        if (empty($response)) {
             Yii::log('Empty response from API service');
             throw new CException('Empty response from API service');
         }
@@ -192,7 +195,8 @@ class SendSmsComponent extends CApplicationComponent
      * @param string $number The telephone number to check for coverage
      * @return string
      */
-    public function queryCoverage($number) {
+    public function queryCoverage($number)
+    {
         $data = array(
             'api_id' => $this->api_id,
             'user' => $this->api_user,
@@ -203,11 +207,11 @@ class SendSmsComponent extends CApplicationComponent
         $context  = $this->buildContext($data);
         $response = file_get_contents(self::API_HTTP_URL.'routeCoverage.php', false, $context);
         $this->last_reponse = $response;
-        if(empty($response)){
+        if (empty($response)) {
             throw new CException('Empty response from API service');
         }
 
-        if(strpos($response, 'OK') !== false){
+        if (strpos($response, 'OK') !== false) {
             return true;
         }
         return false;
@@ -216,7 +220,7 @@ class SendSmsComponent extends CApplicationComponent
     /**
      * Begin a batch sending session
      *
-     * Its important the template contains #field1# style tags. These will 
+     * Its important the template contains #field1# style tags. These will
      * then get replaced with the field data.
      *
      * @param string $template the messaging template to use
@@ -241,11 +245,11 @@ class SendSmsComponent extends CApplicationComponent
         $context = $this->buildContext($data);
         $response = file_get_contents(self::API_HTTP_BATCH_URL.'startbatch', false, $context);
 
-        if(empty($response)){
+        if (empty($response)) {
             throw new CException('Empty response from API service');
         }
         $this->last_response = $response;
-        if(strpos($response, 'ERR') === FALSE){
+        if (strpos($response, 'ERR') === false) {
             $this->batch_id = str_replace('ID: ', '', $response);
             return true;
         }
@@ -257,16 +261,16 @@ class SendSmsComponent extends CApplicationComponent
     public function sendBatchMessage()
     {
         $fields = array();
-        if(empty($this->recipients)){
+        if (empty($this->recipients)) {
             Yii::log('No recipients for batch message');
             return false;
         }
         $recipient = array_pop($this->recipients);
 
-        if(strpos($this->batch_template, '#field1#') !== FALSE){
+        if (strpos($this->batch_template, '#field1#') !== false) {
             $fields['field1'] = $this->branch->company;
         }
-        if(strpos($this->batch_template, '#field2#') !== FALSE){
+        if (strpos($this->batch_template, '#field2#') !== false) {
             $fields['field2'] = $this->branch->phone;
         }
 
@@ -279,12 +283,12 @@ class SendSmsComponent extends CApplicationComponent
         $context = $this->buildContext($data);
         $response = file_get_contents(self::API_HTTP_BATCH_URL.'senditem', false, $context);
 
-        if(empty($response)){
+        if (empty($response)) {
             throw new CException('Empty response from API service');
         }
         $this->last_response = $response;
         $this->last_recipient = $recipient;
-        if(strpos($response, 'ERR') === FALSE){
+        if (strpos($response, 'ERR') === false) {
             return true;
         }
         $this->errors[] = $response;
@@ -293,7 +297,7 @@ class SendSmsComponent extends CApplicationComponent
     }
 
     /**
-     * Builds a correctly formatted context for sending to the Clcikatell API 
+     * Builds a correctly formatted context for sending to the Clcikatell API
      * enpoint in POST format.
      *
      * @param array $data to data to be formatted into valid url-encoded postdata
@@ -319,7 +323,7 @@ class SendSmsComponent extends CApplicationComponent
     private function mapTemplateFields($data)
     {
         $template = $this->template;
-        foreach($data as $key => $val){
+        foreach ($data as $key => $val) {
             $template = str_replace('#'.$key.'#', $val, $template);
         }
         return $template;
@@ -333,7 +337,7 @@ class SendSmsComponent extends CApplicationComponent
      */
     public function printErrors()
     {
-        foreach($this->errors as $error){
+        foreach ($this->errors as $error) {
             echo $error;
         }
 
@@ -342,4 +346,3 @@ class SendSmsComponent extends CApplicationComponent
         print_r($this);
     }
 }
-?>
