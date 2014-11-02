@@ -16,8 +16,6 @@
  * @todo a spring clean
  */
 
-namespace OdinsHat;
-
 class SendSmsComponent extends CApplicationComponent
 {
     /**
