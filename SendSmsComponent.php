@@ -340,7 +340,5 @@ class SendSmsComponent extends CApplicationComponent
         }
 
         echo $this->last_response;
-
-        print_r($this);
     }
 }
