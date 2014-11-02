@@ -318,15 +318,6 @@ class SendSmsComponent extends CApplicationComponent
         return $context;
     }
 
-    private function mapTemplateFields($data)
-    {
-        $template = $this->template;
-        foreach ($data as $key => $val) {
-            $template = str_replace('#'.$key.'#', $val, $template);
-        }
-        return $template;
-    }
-
     /**
      * A crude error output method.
      *
